@@ -54,6 +54,8 @@ jobs:
         with:
           projectBaseDir: .
           args: >
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
             -Dsonar.projectKey=notes-app-sonar
             -Dsonar.sources=src
             -Dsonar.tests=tests
