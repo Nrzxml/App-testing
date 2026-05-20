@@ -48,15 +48,18 @@ jobs:
       - run: npm test
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          sonarToken: ${{ secrets.SONAR_TOKEN }}
-          sonarHostUrl: ${{ secrets.SONAR_HOST_URL }}
           args: >
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
             -Dsonar.projectKey=notes-app-sonar
             -Dsonar.sources=src
             -Dsonar.tests=tests
             -Dsonar.test.inclusions=tests/**/*.test.js
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
 
   k6:
     runs-on: ubuntu-latest
